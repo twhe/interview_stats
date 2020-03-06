@@ -80,12 +80,12 @@ const postCodeLookupResult = {
 }
 
 jest.spyOn(Interview, 'find').mockReturnValue(Promise.resolve(multipleInterviewEvents))
-jest.spyOn(Interview, 'create').mockReturnValue(Promise.resolve(interviewEvent))
+jest.spyOn(Interview, 'findOneAndUpdate').mockReturnValue(Promise.resolve(interviewEvent))
 jest.mock('request-promise')
 
 test('Can submit interview event', async () => {
   rp.mockResolvedValue(postCodeLookupResult)
-  const saved = await interviewService.submitInterviewEvent('SettleMentAgreement', 'M50 3UB')
+  const saved = await interviewService.submitInterviewEvent('123', 'Settlement', 'M50 3UB')
   expect(saved).toHaveProperty('lonlat', [-0.698567, 52.305549])
 })
 

@@ -8,10 +8,10 @@ var KDBush = require('kdbush')
 var geokdbush = require('geokdbush')
 const index = new KDBush(officeList, (p) => p.lonlat[0], (p) => p.lonlat[1])
 
-const submitInterviewEvent = async (type, postcode) => {
+const submitInterviewEvent = async (userid, type, postcode) => {
   try {
     const lonlat = await postcodeGeocode(postcode)
-    const interviewEvent = await Interview.create({ type: type, lonlat: lonlat })
+    const interviewEvent = await Interview.findOneAndUpdate({ userid: userid, type: type }, { userid: userid, type: type, lonlat: lonlat }, { new: true, upsert: true })
     return interviewEvent
   } catch (e) {
     logger.debug('Error submitting interview ' + e.message)
@@ -24,7 +24,7 @@ const getAllInterviewEvents = async () => {
     const interviewEvents = await Interview.find({})
     return interviewEvents.map((evt) => {
       const nearestOffice = getNearestOffice(evt.lonlat)
-      return { type: evt.type, lonlat: evt.lonlat, nearestOffice: nearestOffice, created: evt.createdAt }
+      return { userid: evt.userid, type: evt.type, lonlat: evt.lonlat, nearestOffice: nearestOffice, created: evt.createdAt }
     })
   } catch (e) {
     logger.debug('Error fetching all interview events ' + e.message)

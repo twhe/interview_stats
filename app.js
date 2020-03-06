@@ -11,9 +11,10 @@ const InterviewService = require('./interview/interview.service')
 
 app.get('/submitInterviewEvent', async (req, res) => {
   try {
+    const userid = req.query.userid
     const postcode = req.query.postcode
     const type = req.query.type
-    const result = await InterviewService.submitInterviewEvent(type, postcode)
+    const result = await InterviewService.submitInterviewEvent(userid, type, postcode)
     res.json(result)
   } catch (e) {
     logger.error('Failed to submit interview event ' + e.message)

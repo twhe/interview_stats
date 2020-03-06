@@ -20,7 +20,7 @@ afterAll(async () => {
 })
 
 test('Can submit interview event', async () => {
-  const url = '/submitInterviewEvent?type=SettlementAgreement&postcode=M503UB'
+  const url = '/submitInterviewEvent?userid=123&type=SettlementAgreement&postcode=M503UB'
   await request(app)
     .get(url)
     .set('Accept', 'application/json')
@@ -38,14 +38,16 @@ test('Can fetch all interview events', async () => {
       -0.698567,
       52.305549
     ],
-    type: 'Settlement'
+    type: 'Settlement',
+    userid: '123'
   })
   await Interview.create({
     lonlat: [
       -0.131017,
       51.487154
     ],
-    type: 'Settlement'
+    type: 'Settlement',
+    userid: '234'
   })
 
   await request(app)

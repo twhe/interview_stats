@@ -48,8 +48,11 @@ const postcodeGeocode = async (postcode) => {
 }
 
 const getNearestOffice = (lonlat) => {
-  const nearest = geokdbush.around(index, lonlat[0], lonlat[1], 1)
-  return _.get(nearest, '[0].office')
+  if (lonlat[0] && lonlat[1]) {
+    const nearest = geokdbush.around(index, lonlat[0], lonlat[1], 1)
+    return _.get(nearest, '[0].office')
+  }
+  return 'No location available'
 }
 
 exports.submitInterviewEvent = submitInterviewEvent

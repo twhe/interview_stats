@@ -27,7 +27,7 @@ app.get('/getAllInterviewEvents', async (req, res) => {
     const events = await InterviewService.getAllInterviewEvents()
     res.json(events)
   } catch (e) {
-    logger.error('Failed to submit interview event ' + e.message)
+    logger.error('Failed to fetch interview events ' + e.message)
     res.status(500).json({ message: 'Failed to fetch all interview events' })
   }
 })
